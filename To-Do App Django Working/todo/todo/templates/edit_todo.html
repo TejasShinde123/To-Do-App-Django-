@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>edit page </title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="signup-login">
+
+        <div class="signup-box">
+            <div><h1>Hello {{user}}</h1></div>
+            <div class="heading">
+                Update Things Done 
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <input type="text" class="inp" name="title" required placeholder="Add Todays Task " value="{{obj.title}} " >
+                <br> <hr>
+                <input type="text" class="inp" name="description" required placeholder="Add description Task "  >
+                <br> <hr>
+                <input type="date" class="inp" name="deu_date"  >
+                <br> <hr>
+                <input type="text" class="inp" name="tag"  placeholder="Add Tag">
+
+                <select name="status">
+                    <option value="OPEN">Open</option>
+                    <option value="WORKING">Working</option>
+                    <option value="PENDING_REVIEW">Pending Review</option>
+                    <option value="COMPLETED">Completed</option> 
+            
+                    <option value="OVERDUE">Overdue</option>
+                    <option value="CANCELLED">Cancelled</option>
+                </select>
+
+
+                <input type="submit" class="submit-button" value="Update Task" >
+
+            </form>
+            {% for todo in res  %} 
+                <div class="Todo">
+                    <h5>{{todo.srno}}</h5> 
+                    <p>{{todo.title}}</p><br>
+                    <p>{{todo.description}}</p><br> 
+                    <p>{{todo.date}}</p>
+                    <p>{{todo.due_date}}</p>
+                    <p>{{todo.tag}}</p>
+                    <p>{{todo.status}}</p>
+                    <div>edit</div>
+                </div>
+            {% endfor %}
+        
+
+
+
+        </div>
+    </div>
+
+
+</div>
+        
+</body>
+</html>

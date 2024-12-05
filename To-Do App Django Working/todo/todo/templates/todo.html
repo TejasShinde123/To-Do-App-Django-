@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todo page</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        
+/* Additional CSS for signout button */
+
+.signout a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007BFF; /* Blue color */
+  color: #fff; /* White text */
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.signout a:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+    </style>
+</head>
+<body>
+    <div class="signup-login">
+        
+        <div class="signup-box">
+            <div class="signout">
+                <a href="{% url 'signout' %}" class="signout">Signout</a>
+            </div>
+            <h1>Hello {{ user }}</h1>
+            
+            
+            <div class="heading">
+                Get Things Done
+            </div>
+            
+            <form method="post">
+                {% csrf_token %}
+                <input type="text" class="inp" name="title" required placeholder="Add Today's Task">
+                <br><hr>
+                <input type="text" class="inp" name="description" required placeholder="Add description for Task">
+                <br><hr>
+                <input type="date" class="inp" name="due_date">
+                <br><hr>
+                <input type="text" class="inp" name="tags" placeholder="Add Tag">
+                <br><hr>
+                <select name="status" required>
+                    <option value="OPEN">Open</option>
+                    <option value="WORKING">Working</option>
+                    <option value="PENDING_REVIEW">Pending Review</option>
+                    <option value="COMPLETED">Completed</option>
+                    <option value="OVERDUE">Overdue</option>
+                    <option value="CANCELLED">Cancelled</option>
+                </select>
+                <input type="submit" class="submit-button" value="Add Task">
+            </form>
+
+            {% for todo in res %}
+                <div class="Todo">
+                    <h5>{{ todo.srno }}</h5>
+                    <p>{{ todo.title }}</p>
+                    <p>{{ todo.description }}</p>
+                    <p>{{ todo.date }}</p>
+                    <p>{{ todo.due_date }}</p>
+                    <p>{{ todo.tag }}</p> <!-- Display the tag here -->
+                    <p>{{ todo.status }}</p>
+                    <div>
+                        <a href="/edit_todo/{{ todo.srno }}">edit</a>
+                        <a href="/delete_todo/{{ todo.srno }}">delete</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
